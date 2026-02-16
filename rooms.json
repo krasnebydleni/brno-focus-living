@@ -1,0 +1,77 @@
+{
+  "brand": {
+    "name": "Brno Focus Living",
+    "location": "Brno – Královo Pole",
+    "tagline_en": "Quiet shared living for young professionals in Brno.",
+    "tagline_cs": "Klidné sdílené bydlení pro mladé profesionály v Brně."
+  },
+  "contact": {
+    "email": "YOUR_EMAIL_HERE",
+    "phone": "YOUR_PHONE_HERE",
+    "apply_url": "YOUR_FORM_URL_HERE"
+  },
+  "rules": {
+    "smoking": false,
+    "pets": false,
+    "party_flat": false
+  },
+  "rooms": [
+    {
+      "id": "small",
+      "name_en": "Small Room",
+      "name_cs": "Malý pokoj",
+      "size_m2": 8,
+      "units_total": 4,
+      "price_from_czk": 7300,
+      "status": "upcoming",
+      "available_from": "2026-04-01",
+      "hero_bullets_en": ["Minimalist, move-in ready", "Best value for focused living"],
+      "hero_bullets_cs": ["Minimalistický, připravený k nastěhování", "Nejlepší poměr cena/klid"],
+      "summary_en": "A compact, efficient room for people who value simplicity and calm.",
+      "summary_cs": "Kompaktní pokoj pro ty, kdo chtějí jednoduchost, pořádek a klid.",
+      "included_en": ["All-inclusive utilities", "High-speed internet", "Shared bathrooms + separate WC", "Custom kitchen"],
+      "included_cs": ["Energie a služby v ceně", "Rychlý internet", "Sdílené koupelny + separátní WC", "Kuchyň na míru"],
+      "ideal_for_en": ["Junior professionals", "VUT / MU students with a calm routine", "Relocation to Brno"],
+      "ideal_for_cs": ["Mladí profesionálové", "VUT / MU studenti s klidným režimem", "Relokace do Brna"],
+      "image": "assets/img/small.jpg"
+    },
+    {
+      "id": "medium",
+      "name_en": "Medium Room",
+      "name_cs": "Střední pokoj",
+      "size_m2": 12,
+      "units_total": 4,
+      "price_from_czk": 11900,
+      "status": "available",
+      "available_from": "now",
+      "hero_bullets_en": ["Balanced space & comfort", "Great for long-term stay"],
+      "hero_bullets_cs": ["Ideální kompromis prostoru a komfortu", "Skvělé na dlouhodobé bydlení"],
+      "summary_en": "Comfortable size with a strong focus on a clean and productive home base.",
+      "summary_cs": "Pohodlná velikost s důrazem na čisté a funkční zázemí pro práci i studium.",
+      "included_en": ["All-inclusive utilities", "High-speed internet", "Fully renovated interior", "Shared bathrooms + separate WC"],
+      "included_cs": ["Energie a služby v ceně", "Rychlý internet", "Kompletní rekonstrukce", "Sdílené koupelny + separátní WC"],
+      "ideal_for_en": ["Engineers & IT", "PhD / researchers", "People who want calm shared living"],
+      "ideal_for_cs": ["IT a technické obory", "Doktorandi / výzkum", "Lidé, co chtějí klidné spolubydlení"],
+      "image": "assets/img/medium.jpg"
+    },
+    {
+      "id": "large",
+      "name_en": "Large Room",
+      "name_cs": "Velký pokoj",
+      "size_m2": 22,
+      "units_total": 8,
+      "price_from_czk": 13900,
+      "status": "upcoming",
+      "available_from": "2026-05-15",
+      "hero_bullets_en": ["Maximum comfort & space", "Premium feel for everyday life"],
+      "hero_bullets_cs": ["Maximální komfort a prostor", "Prémiový pocit pro každý den"],
+      "summary_en": "Spacious and premium – ideal if you want room to breathe and work comfortably.",
+      "summary_cs": "Prostorný prémiový pokoj – ideální, když chceš mít klid i prostor na práci.",
+      "included_en": ["All-inclusive utilities", "High-speed internet", "Custom kitchen", "Shared bathrooms + separate WC"],
+      "included_cs": ["Energie a služby v ceně", "Rychlý internet", "Kuchyň na míru", "Sdílené koupelny + separátní WC"],
+      "ideal_for_en": ["Young professionals", "Long-term tenants", "People who want comfort without hassle"],
+      "ideal_for_cs": ["Mladí profesionálové", "Dlouhodobí nájemníci", "Lidé, co chtějí komfort bez starostí"],
+      "image": "assets/img/large.jpg"
+    }
+  ]
+}
