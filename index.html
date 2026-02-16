@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Brno Focus Living — Quiet shared living in Královo Pole</title>
+  <meta name="description" content="Brno Focus Living — quiet shared living for young professionals in Brno – Královo Pole. Fully renovated, all-inclusive, fast move-in." />
+  <meta property="og:title" content="Brno Focus Living" />
+  <meta property="og:description" content="Quiet shared living in Brno – Královo Pole. All-inclusive, fully renovated, focus-first house rules." />
+  <meta property="og:image" content="assets/img/og.jpg" />
+  <meta name="theme-color" content="#0b1220" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="topbar">
+      <div class="brand">
+        <strong id="brandName">Brno Focus Living</strong>
+        <span id="brandLoc">Brno – Královo Pole</span>
+      </div>
+
+      <div class="controls">
+        <div class="pill" id="langEn">EN</div>
+        <div class="pill" id="langCs">CZ</div>
+        <a class="btn primary" href="#apply" id="applyBtn">Apply / Request a viewing</a>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="heroCard">
+        <div class="heroImg" style="background-image:url('assets/img/hero.jpg')"></div>
+        <div class="heroContent">
+          <h1 id="heroTitle">Brno Focus Living</h1>
+          <div class="sub" id="heroSubtitle">
+            Quiet shared living in Brno – Královo Pole for young professionals and focused students.
+          </div>
+
+          <div class="badges">
+            <div class="badge">All-inclusive</div>
+            <div class="badge">High-speed internet</div>
+            <div class="badge">Fully renovated</div>
+            <div class="badge">Focus-first rules</div>
+          </div>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="#rooms">View room types</a>
+            <a class="btn" href="#apply">Apply</a>
+          </div>
+
+          <div class="smallNote" id="contactLine">
+            Contact: add email • add phone
+          </div>
+        </div>
+      </div>
+
+      <div class="heroCard sideCard">
+        <h2 id="hWhy">Why Brno Focus Living</h2>
+        <p id="aboutText">
+          A fully renovated shared living concept designed for clean, calm and reliable everyday life.
+        </p>
+
+        <div class="list" id="whatIncluded">
+          <!-- injected by JS -->
+        </div>
+
+        <div class="smallNote" id="policyLine">
+          Focus-first house rules: smoke-free, no pets, calm environment.
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="rooms">
+      <h3 id="hRooms">Room types</h3>
+      <p id="hRoomsDesc">
+        A premium, consistent standard across all rooms. Pick the size that fits your lifestyle and budget.
+      </p>
+
+      <div class="filters" aria-label="filters">
+        <span class="meta" id="hFiltersLabel">Filter</span>
+        <div class="pill active" data-filter="all" id="filterAll">All</div>
+        <div class="pill" data-filter="available" id="filterAvailable">Available</div>
+        <div class="pill" data-filter="upcoming" id="filterUpcoming">Upcoming</div>
+        <div class="pill" data-filter="occupied" id="filterOccupied">Occupied</div>
+        <div class="pill" id="toggleOccupied">Show occupied</div>
+        <span class="meta" id="roomsCount"></span>
+      </div>
+
+      <div class="grid" id="roomsGrid">
+        <!-- injected by JS -->
+      </div>
+    </div>
+
+    <div class="section" id="apply">
+      <h3 id="hApply">Apply</h3>
+      <p id="applyText">
+        Tell us who you are and when you want to move in. We’ll reply with matching options and the next steps.
+      </p>
+
+      <div class="heroCard" style="padding:16px; margin-top:12px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+          <div style="color:var(--muted); line-height:1.6;">
+            <div><strong style="color:var(--text);">Fast route:</strong> use the apply button (form), or contact us by email/phone.</div>
+            <div style="margin-top:6px;">Tip: include your move-in date, how long you plan to stay, and your daily routine (study/work).</div>
+          </div>
+          <a class="btn primary" href="#apply" id="applyBtn2">Apply / Request a viewing</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>
+        <strong>Brno Focus Living</strong> • Královo Pole • <span style="opacity:.9">All-inclusive shared living</span>
+      </div>
+      <div>
+        <a href="#rooms">Rooms</a> • <a href="#apply">Apply</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // mirror apply button text/link in the bottom card
+    window.addEventListener("load", () => {
+      const a1 = document.getElementById("applyBtn");
+      const a2 = document.getElementById("applyBtn2");
+      if(a1 && a2){
+        a2.href = a1.href;
+        a2.textContent = a1.textContent;
+      }
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
