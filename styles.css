@@ -82,6 +82,8 @@ a{color:inherit; text-decoration:none}
   font-size: 14px;
   background: rgba(255,255,255,.05);
   cursor:pointer;
+  color: var(--text);
+
 }
 .btn.primary{
   border-color: rgba(34,197,94,.45);
