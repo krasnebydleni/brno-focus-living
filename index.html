@@ -1,217 +1,362 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Brno Focus Living — Quiet shared living in Královo Pole</title>
-  <meta name="description" content="Brno Focus Living — quiet shared living for young professionals in Brno – Královo Pole. Fully renovated, all-inclusive, focus-first house rules." />
-  <meta property="og:title" content="Brno Focus Living" />
-  <meta property="og:description" content="Quiet shared living in Brno – Královo Pole. All-inclusive, fully renovated, focus-first rules. See room types & availability." />
-  <meta property="og:image" content="assets/img/og.jpg" />
-  <meta name="theme-color" content="#0b1220" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
+:root{
+  --bg: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --line: rgba(15,23,42,.10);
+  --accent: #22c55e;
+  --shadow: 0 18px 55px rgba(2,6,23,.10);
+  --radius: 22px;
+  --max: 1180px;
+}
 
-<body>
-  <div class="container">
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: #0b1220;
+    --text: #e5e7eb;
+    --muted: #a7b0c0;
+    --line: rgba(226,232,240,.10);
+    --shadow: 0 18px 55px rgba(0,0,0,.42);
+  }
+}
 
-    <div class="topbar">
-      <div class="brand">
-        <strong id="brandName">Brno Focus Living</strong>
-        <span id="brandLoc">Brno – Královo Pole</span>
-      </div>
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+  background:
+    radial-gradient(1100px 460px at 10% -10%, rgba(34,197,94,.14), transparent 60%),
+    radial-gradient(1100px 460px at 90% -10%, rgba(14,165,233,.10), transparent 60%),
+    var(--bg);
+  color:var(--text);
+}
 
-      <div class="controls">
-        <div class="pill" id="langEn">EN</div>
-        <div class="pill" id="langCs">CZ</div>
-        <a class="btn primary" href="#apply" id="applyBtnTop">Join waitlist / Apply</a>
-      </div>
-    </div>
+a{color:inherit; text-decoration:none}
+.container{max-width:var(--max); margin:0 auto; padding:28px 18px 70px}
 
-    <div class="hero">
-      <div class="heroCard">
-        <div class="heroImg" style="background-image:url('assets/img/hero.jpg')"></div>
-        <div class="heroContent">
-          <h1 id="heroTitle">Brno Focus Living</h1>
-          <div class="sub" id="heroSubtitle">
-            Quiet shared living in Brno – Královo Pole for young professionals. Fully renovated, all-inclusive, designed for focus.
-          </div>
+.topbar{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:8px 0 18px;
+}
+.brand{display:flex; flex-direction:column; gap:2px;}
+.brand strong{font-size:18px; letter-spacing:.2px}
+.brand span{font-size:13px; color:var(--muted)}
+.controls{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
 
-          <div class="badges" id="heroBadges">
-            <div class="badge">All-inclusive</div>
-            <div class="badge">High-speed internet</div>
-            <div class="badge">Fully renovated</div>
-            <div class="badge">Focus-first rules</div>
-          </div>
+.pill{
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.06);
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:13px;
+  color:var(--muted);
+  cursor:pointer;
+  user-select:none;
+}
+.pill.active{
+  color:var(--text);
+  border-color: rgba(34,197,94,.35);
+  box-shadow: 0 0 0 4px rgba(34,197,94,.10);
+}
 
-          <div class="ctaRow">
-            <a class="btn primary" href="#rooms" id="ctaRooms">View room types</a>
-            <a class="btn" href="#apply" id="ctaApply">Join waitlist / Apply</a>
-          </div>
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:12px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  font-weight: 800;
+  font-size: 14px;
+  background: rgba(255,255,255,.05);
+  cursor:pointer;
+}
+.btn.primary{
+  border-color: rgba(34,197,94,.45);
+  background: linear-gradient(180deg, rgba(34,197,94,.18), rgba(34,197,94,.06));
+}
+.btn:hover{transform: translateY(-1px)}
 
-          <div class="smallNote" id="contactLine">Contact: add email • add phone</div>
-          <div class="smallNote" id="slaLine"></div>
-        </div>
-      </div>
+.smallNote{margin-top:10px; color:var(--muted); font-size:13px}
+.meta{color:var(--muted); font-size:13px}
 
-    </div>
+/* HERO – full width */
+.hero{display:block}
+.heroCard{
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  overflow:hidden;
+  box-shadow: var(--shadow);
+  background: rgba(255,255,255,.03);
+}
 
-    <div class="section" id="rooms">
-      <h3 id="hRooms">Room types</h3>
-      <p id="roomsIntro" class="meta"></p>
+.heroImg{
+  min-height: 390px;
+  background-size: cover;
+  background-position: center;
+  position:relative;
+}
+.heroImg:after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.36));
+}
+.heroContent{
+  position:relative;
+  margin-top:-140px;
+  padding:18px 18px 20px;
+}
 
-      <div class="filters" aria-label="filters">
-        <span class="meta" id="hFiltersLabel">Filter</span>
-        <div class="pill active" data-filter="all" id="filterAll">All</div>
-        <div class="pill" data-filter="available" id="filterAvailable">Available</div>
-        <div class="pill" data-filter="upcoming" id="filterUpcoming">Upcoming</div>
-        <div class="pill" data-filter="occupied" id="filterOccupied">Occupied</div>
-        <div class="pill" id="toggleOccupied">Show occupied</div>
-        <span class="meta" id="roomsCount"></span>
-      </div>
+.heroContentInner{
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.28);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding:16px 16px 18px;
+}
 
-      <div class="grid" id="roomsGrid"></div>
+h1{margin:0 0 8px; font-size:52px; line-height:1.05; letter-spacing:-.8px}
+@media (max-width: 700px){ h1{font-size:40px} }
 
-      <div class="heroCard" style="padding:16px; margin-top:14px;">
-        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; justify-content:space-between;">
-          <div style="min-width:260px; flex:1;">
-            <div style="font-weight:800;" id="waitlistTitle">Waitlist beats timing</div>
-            <div class="meta" style="margin-top:6px;" id="waitlistText"></div>
-          </div>
-          <a class="btn primary" href="#apply" id="waitlistBtn">Join waitlist</a>
-        </div>
-      </div>
-    </div>
+.sub{color:rgba(255,255,255,.86); font-size:16px; line-height:1.55; margin-bottom:12px}
+.badges{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 14px}
+.badge{
+  font-size:12px;
+  padding:7px 10px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;
+  color:rgba(255,255,255,.84);
+  background: rgba(255,255,255,.06);
+}
+.ctaRow{display:flex; gap:10px; flex-wrap:wrap}
 
-    <div class="section" id="companies">
-      <h3 id="hCompanies">For companies / relocation</h3>
-      <p class="meta" id="companiesText"></p>
+/* Wide trust/why block */
+.wideCard{
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  padding:18px;
+  background: rgba(255,255,255,.03);
+  box-shadow: var(--shadow);
+}
+.wideGrid{
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap:16px;
+  align-items:start;
+}
+@media (max-width: 900px){ .wideGrid{grid-template-columns:1fr} }
 
-      <div class="grid2">
-        <div class="heroCard" style="padding:16px;">
-          <div style="font-weight:800;" id="companiesBul1">Why it works for HR</div>
-          <ul class="metaList" id="companiesList">
-            <li id="hr1"></li>
-            <li id="hr2"></li>
-            <li id="hr3"></li>
-            <li id="hr4"></li>
-          </ul>
-        </div>
-        <div class="heroCard" style="padding:16px;">
-          <div style="font-weight:800;" id="companiesBul2">Send internally</div>
-          <div class="meta" id="companiesSnippet" style="line-height:1.65;"></div>
-          <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="btn" id="copyCompanySnippet">Copy snippet</button>
-            <button class="btn" id="copySiteLink">Copy link</button>
-          </div>
-        </div>
-      </div>
-    </div>
+.wideTitle{font-weight:900; font-size:18px; margin-bottom:8px}
+.wideText{color:var(--muted); line-height:1.65}
+.wideList{display:grid; gap:8px}
+.wideItem{
+  display:flex; gap:10px; align-items:flex-start;
+  padding:10px 12px;
+  border-radius: 16px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.03);
+}
+.dot{width:9px; height:9px; border-radius:50%; background: var(--accent); margin-top:6px; flex:0 0 auto;}
+.wideItem span{color:var(--muted); line-height:1.45; font-size:13.5px}
+.wideNote{margin-top:10px; color:var(--muted); font-size:13px}
 
-    <div class="section" id="apply">
-      <h3 id="hApply">Apply / Join waitlist</h3>
-      <p id="applyText" class="meta"></p>
+/* Sections */
+.section{margin-top:30px}
+.section h3{margin:0 0 10px; font-size:20px}
+.section p{margin:0; color:var(--muted); line-height:1.65}
 
-      <div class="heroCard" style="padding:16px; margin-top:12px;">
-        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
-          <div style="color:var(--muted); line-height:1.65;">
-            <div><strong style="color:var(--text);" id="applyFast">Fast route:</strong> <span id="applyFastText"></span></div>
-            <div style="margin-top:6px;" id="applyTip"></div>
-          </div>
-          <a class="btn primary" href="#apply" id="applyBtnBottom">Join waitlist / Apply</a>
-        </div>
-        <div class="smallNote" id="applyNote"></div>
-      </div>
-      <div class="section" style="margin-top:16px;">
-        <div class="wideCard">
-          <div class="wideGrid">
-            <div>
-              <div class="wideTitle" id="hWhy">Why Brno Focus Living</div>
-              <div class="wideText" id="aboutText"></div>
-            </div>
-            <div class="wideList" id="whatIncluded"></div>
-          </div>
-          <div class="wideNote" id="policyLine"></div>
-        </div>
-      </div>
+/* Filters */
+.filters{
+  display:flex; gap:8px; flex-wrap:wrap;
+  margin:18px 0 14px;
+}
 
-    </div>
+/* Rooms grid – bigger cards */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:16px;
+}
+@media (max-width: 980px){ .grid{grid-template-columns: repeat(2, 1fr)} }
+@media (max-width: 640px){ .grid{grid-template-columns: 1fr} }
 
-    <div class="footer">
-      <div>
-        <strong>Brno Focus Living</strong> • Královo Pole • <span style="opacity:.9">All-inclusive shared living</span>
-      </div>
-      <div>
-        <a href="#rooms">Rooms</a> • <a href="#companies">For companies</a> • <a href="#apply">Apply</a>
-      </div>
-    </div>
+.card{
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  overflow:hidden;
+  background: rgba(255,255,255,.03);
+  box-shadow: var(--shadow);
+  display:flex; flex-direction:column;
+}
+.cardImg{height:210px; background-size:cover; background-position:center; cursor:pointer}
+.cardBody{padding:16px; display:flex; flex-direction:column; gap:10px}
+.cardTitle{display:flex; justify-content:space-between; gap:10px; align-items:flex-start}
+.cardTitle strong{font-size:18px}
+.price{font-weight:900; letter-spacing:.2px}
 
-  </div>
+.status{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  color:var(--muted);
+  width:fit-content;
+}
+.status.available{
+  border-color: rgba(34,197,94,.45);
+  color: var(--text);
+  background: rgba(34,197,94,.10);
+}
+.status.upcoming{
+  border-color: rgba(14,165,233,.45);
+  color: var(--text);
+  background: rgba(14,165,233,.10);
+}
+.status.occupied{
+  border-color: rgba(148,163,184,.35);
+  color: var(--muted);
+  background: rgba(148,163,184,.08);
+}
 
-  <!-- Room detail modal -->
-  <div class="modal" id="roomModal" aria-hidden="true">
-    <div class="modalOverlay" id="modalOverlay"></div>
+.cardActions{display:flex; gap:10px; flex-wrap:wrap}
 
-    <div class="modalCard" role="dialog" aria-modal="true" aria-label="Room details">
-      <div class="modalHeader">
-        <div>
-          <div class="modalTitle" id="modalTitle">Room</div>
-          <div class="modalMeta" id="modalMeta">—</div>
-        </div>
-        <button class="iconBtn" id="modalClose" aria-label="Close">✕</button>
-      </div>
+/* Footer */
+.footer{
+  margin-top:40px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:13px;
+  display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+}
+.footer a{color:var(--muted)}
 
-      <div class="modalBody">
-        <div class="mediaGrid">
-          <div class="gallery">
-            <div class="galleryMain" id="galleryMain"></div>
-            <div class="galleryBar">
-              <button class="btn" id="prevImg">←</button>
-              <div class="galleryDots" id="galleryDots"></div>
-              <button class="btn" id="nextImg">→</button>
-            </div>
-            <div class="thumbs" id="thumbs"></div>
-          </div>
-
-          <div class="videoBox" id="videoBox" style="display:none;">
-            <div class="videoTitle" id="videoTitle"></div>
-            <div class="videoFrameWrap">
-              <iframe id="videoFrame" title="Room video" loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-            </div>
-          </div>
-        </div>
-
-        <div class="modalCols">
-          <div class="kvBox">
-            <strong id="modalStatus">Status</strong>
-            <div class="meta" id="modalStatusText"></div>
-            <div style="height:10px"></div>
-            <strong id="modalPriceLabel">All-inclusive price</strong>
-            <div class="price" id="modalPrice">—</div>
-            <div class="meta" id="modalAvail">—</div>
-          </div>
-
-          <div class="kvBox">
-            <strong id="modalIncludedLabel">What's included</strong>
-            <ul id="modalIncluded"></ul>
-          </div>
-
-          <div class="kvBox">
-            <strong id="modalIdealLabel">Ideal for</strong>
-            <ul id="modalIdeal"></ul>
-          </div>
-        </div>
-
-        <div class="modalFooter">
-          <a class="btn primary" href="#apply" id="modalApply">Join waitlist / Apply</a>
-          <button class="btn" id="copyLink">Copy link</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+/* Modal (keep) */
+.modal{position:fixed; inset:0; display:none; z-index:50}
+.modal.open{display:block}
+.modalOverlay{position:absolute; inset:0; background: rgba(0,0,0,.55); backdrop-filter: blur(6px)}
+.modalCard{
+  position:relative;
+  max-width: 1100px;
+  margin: 18px auto;
+  height: calc(100vh - 36px);
+  border-radius: 22px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background: var(--bg);
+  box-shadow: var(--shadow);
+  display:flex;
+  flex-direction:column;
+}
+@media (max-width: 1100px){
+  .modalCard{margin: 0; height: 100vh; border-radius: 0}
+}
+.modalHeader{
+  display:flex; justify-content:space-between; align-items:flex-start;
+  gap:10px;
+  padding:14px 14px;
+  border-bottom:1px solid var(--line);
+  background: rgba(255,255,255,.02);
+}
+.modalTitle{font-size:18px; font-weight:900}
+.modalMeta{color:var(--muted); font-size:13px; margin-top:2px}
+.iconBtn{
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.05);
+  color: var(--text);
+  width:40px; height:40px;
+  border-radius: 14px;
+  cursor:pointer;
+}
+.modalBody{padding:14px; overflow:auto}
+.mediaGrid{
+  display:grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap:12px;
+}
+@media (max-width: 900px){
+  .mediaGrid{grid-template-columns:1fr}
+}
+.galleryMain{
+  height: 360px;
+  border-radius: 18px;
+  border:1px solid var(--line);
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(255,255,255,.03);
+}
+@media (max-width: 900px){ .galleryMain{height: 280px} }
+.galleryBar{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px;
+  margin-top:10px;
+}
+.galleryDots{display:flex; gap:6px; flex-wrap:wrap}
+.dotBtn{
+  width:10px; height:10px; border-radius:999px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.05);
+  cursor:pointer;
+}
+.dotBtn.active{
+  background: rgba(34,197,94,.35);
+  border-color: rgba(34,197,94,.60);
+}
+.thumbs{
+  display:flex; gap:8px; overflow:auto;
+  padding:10px 2px 2px;
+}
+.thumb{
+  width:74px; height:54px;
+  border-radius: 12px;
+  border:1px solid var(--line);
+  background-size: cover;
+  background-position:center;
+  cursor:pointer;
+  flex: 0 0 auto;
+  opacity:.9;
+}
+.thumb.active{
+  outline: 3px solid rgba(34,197,94,.35);
+  opacity:1;
+}
+.videoBox{
+  border:1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,.03);
+  padding:12px;
+}
+.videoTitle{font-weight:800; margin-bottom:10px}
+.videoFrameWrap{
+  position:relative;
+  width:100%;
+  padding-top: 56.25%;
+  border-radius: 14px;
+  overflow:hidden;
+  border:1px solid var(--line);
+}
+.videoFrameWrap iframe{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  border:0;
+}
+.modalCols{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:10px;
+}
+@media (max-width: 980px){ .modalCols{grid-template-columns: 1fr} }
+.kvBox{
+  border:1px solid var(--line);
+  border-radius: 14px;
+  padding:10px 12px;
+  background: rgba(255,255,255,.03);
+}
+.kvBox strong{
+  display:block; font-size:12px; color:var(--muted);
+  margin-bottom:6px; letter-spacing:.2px; text-transform:uppercase
+}
+.kvBox ul{margin:0; padding-left:16px; color:var(--muted); line-height:1.6; font-size:13.5px}
+.modalFooter{
+  display:flex; gap:10px; flex-wrap:wrap;
+  margin-top:12px;
+}
