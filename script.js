@@ -1,9 +1,9 @@
 const $ = (sel) => document.querySelector(sel);
 
 let DATA = null;
-let LANG = localStorage.getItem("bfl_lang") || "en";
+let LANG = localStorage.getItem("bfl_lang") || "cs"; // CZ default
 let FILTER = "all";
-let SHOW_OCCUPIED = false;
+let SHOW_OCCUPIED = true;
 
 // modal/gallery state
 let ACTIVE_ROOM = null;
@@ -23,31 +23,16 @@ function formatDate(d){
   return new Intl.DateTimeFormat(LANG === "cs" ? "cs-CZ" : "en-GB", { year:"numeric", month:"short", day:"2-digit" }).format(dt);
 }
 
-function setLang(next){
-  LANG = next;
-  localStorage.setItem("bfl_lang", LANG);
-  renderAll();
-}
-
-function setFilter(next){
-  FILTER = next;
-  renderRooms();
-  updateFilterUI();
-}
-
-function updateFilterUI(){
-  document.querySelectorAll("[data-filter]").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.filter === FILTER);
-  });
-  const toggle = $("#toggleOccupied");
-  toggle.classList.toggle("active", SHOW_OCCUPIED);
-  toggle.textContent = SHOW_OCCUPIED ? t("Hide occupied", "Skrýt obsazené") : t("Show occupied", "Zobrazit obsazené");
+function statusLabelShort(r){
+  if(r.status === "available") return t("Available now", "Volné nyní");
+  if(r.status === "upcoming") return t(`From ${formatDate(r.available_from)}`, `Od ${formatDate(r.available_from)}`);
+  return t("Occupied", "Obsazeno");
 }
 
 function roomStatusLabel(status, availableFrom){
   if(status === "available") return t("Available now", "Volné nyní");
   if(status === "upcoming") return t(`Available from ${formatDate(availableFrom)}`, `Volné od ${formatDate(availableFrom)}`);
-  return t("Occupied (join waitlist)", "Obsazeno (waitlist)");
+  return t("Occupied (waitlist)", "Obsazeno (waitlist)");
 }
 
 function shouldShowRoom(r){
@@ -71,15 +56,32 @@ function roomCoverUrl(r){
   return "assets/img/placeholder.jpg";
 }
 
+/* ---------- Gallery from folder (jpg: cover + 1..10) ---------- */
+function tryLoadImage(url){
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
+}
+async function buildGalleryFromFolder(folder){
+  const out = [];
+  const cover = `${folder}/cover.jpg`;
+  if(await tryLoadImage(cover)) out.push(cover);
+  for(let i=1;i<=10;i++){
+    const u = `${folder}/${i}.jpg`;
+    if(await tryLoadImage(u)) out.push(u);
+  }
+  if(!out.length) out.push("assets/img/placeholder.jpg");
+  return out;
+}
+
+/* ---------- Cards ---------- */
 function roomCard(r){
-  const price = t("from", "od");
   const img = roomCoverUrl(r);
   const occ = (LANG === "cs" ? r.occupancy_cs : r.occupancy_en) || "";
-
-  const statusLabel = roomStatusLabel(r.status, r.available_from);
-  const ctaPrimary = (r.status === "available")
-    ? t("View details", "Detail")
-    : t("Join waitlist", "Přidat na waitlist");
+  const title = (LANG === "cs" ? r.name_cs : r.name_en);
 
   return `
   <div class="card" data-room="${r.id}">
@@ -87,36 +89,84 @@ function roomCard(r){
     <div class="cardBody">
       <div class="cardTitle">
         <div>
-          <strong>${LANG === "cs" ? r.name_cs : r.name_en}</strong>
-          <div class="meta">${r.size_m2} m² • ${occ} • ${t("Total rooms","Počet pokojů")}: ${r.units_total}</div>
+          <strong>${title}</strong>
+          <div class="meta">${r.size_m2} m² • ${occ} • ${t("All-inclusive","All-inclusive")}</div>
         </div>
-        <div class="price">${price} ${formatPriceCZK(r.price_from_czk)}</div>
+        <div class="price">${t("from","od")} ${formatPriceCZK(r.price_from_czk)}</div>
       </div>
 
-      <div class="status ${r.status}">${statusLabel}</div>
+      <div class="status ${r.status}">${roomStatusLabel(r.status, r.available_from)}</div>
       <div class="meta">${LANG === "cs" ? r.summary_cs : r.summary_en}</div>
 
       <div class="cardActions">
-        <button class="btn primary" data-action="open">${ctaPrimary}</button>
-        <a class="btn" href="${applyUrlForRoom(r.id)}">${t("Apply", "Poptat")}</a>
+        <button class="btn primary" data-action="open">${t("View details","Detail")}</button>
+        <a class="btn" href="${applyUrlForRoom(r.id)}">${t("Apply","Poptat")}</a>
       </div>
     </div>
   </div>
   `;
 }
 
+function featuredCard(r){
+  const img = roomCoverUrl(r);
+  const title = (LANG === "cs" ? r.name_cs : r.name_en);
+  const occ = (LANG === "cs" ? r.occupancy_cs : r.occupancy_en) || "";
+  const bullets = (LANG === "cs" ? r.feature_bullets_cs : r.feature_bullets_en) || [];
+
+  const tag = (r.status === "available")
+    ? t("Available now", "Volné nyní")
+    : t(`From ${formatDate(r.available_from)}`, `Od ${formatDate(r.available_from)}`);
+
+  const statusCls = (r.status === "available") ? "available" : "upcoming";
+
+  return `
+  <div class="featureCard" data-room="${r.id}">
+    <div class="featureImg" style="background-image:url('${img}')">
+      <div class="featureTag">${tag}</div>
+    </div>
+    <div class="featureBody">
+      <div class="featureHead">
+        <div>
+          <strong>${title}</strong>
+          <div class="featureMeta">${r.size_m2} m² • ${occ} • ${t("All-inclusive","All-inclusive")}</div>
+        </div>
+        <div class="price">${t("from","od")} ${formatPriceCZK(r.price_from_czk)}</div>
+      </div>
+
+      <div class="statusPill ${statusCls}">${statusLabelShort(r)}</div>
+
+      <div class="featureBullets">
+        ${(bullets.length ? bullets : [
+          t("Fully renovated interior","Kompletní rekonstrukce"),
+          t("High-speed internet included","Rychlý internet v ceně"),
+          t("Tram nearby + 3 min to Albert/Lidl","Tramvaj za rohem + 3 min Albert/Lidl")
+        ]).slice(0,3).map(x => `
+          <div class="bullet"><div class="bdot"></div><div>${x}</div></div>
+        `).join("")}
+      </div>
+
+      <div class="featureActions">
+        <button class="btn primary" data-action="open">${t("View photos & video","Fotky & video")}</button>
+        <a class="btn" href="${applyUrlForRoom(r.id)}">${t("Apply","Poptat")}</a>
+      </div>
+    </div>
+  </div>
+  `;
+}
+
+/* ---------- Render sections ---------- */
 function bindRoomEvents(){
-  document.querySelectorAll(".card [data-action='open']").forEach(btn => {
+  document.querySelectorAll("[data-action='open']").forEach(btn => {
     btn.addEventListener("click", async (e) => {
-      const id = e.target.closest(".card").dataset.room;
+      const id = e.target.closest("[data-room]").dataset.room;
       const r = DATA.rooms.find(x => x.id === id);
       await openRoomModal(r);
     });
   });
 
-  document.querySelectorAll(".card .cardImg").forEach(img => {
-    img.addEventListener("click", async (e) => {
-      const id = e.target.closest(".card").dataset.room;
+  document.querySelectorAll(".cardImg, .featureImg").forEach(el => {
+    el.addEventListener("click", async (e) => {
+      const id = e.target.closest("[data-room]").dataset.room;
       const r = DATA.rooms.find(x => x.id === id);
       await openRoomModal(r);
     });
@@ -128,7 +178,16 @@ function renderRooms(){
   const rooms = DATA.rooms.filter(shouldShowRoom);
   grid.innerHTML = rooms.map(roomCard).join("");
   bindRoomEvents();
-  $("#roomsCount").textContent = t(`${rooms.length} room types shown`, `${rooms.length} typů zobrazeno`);
+  $("#roomsCount").textContent = t(`${rooms.length} shown`, `${rooms.length} zobrazeno`);
+}
+
+function renderFeatured(){
+  const featured = DATA.rooms
+    .filter(r => r.featured === true)
+    .sort((a,b) => (a.featured_order||999) - (b.featured_order||999));
+
+  $("#featuredGrid").innerHTML = featured.map(featuredCard).join("");
+  bindRoomEvents();
 }
 
 function setApplyButtons(){
@@ -138,7 +197,7 @@ function setApplyButtons(){
   const email = DATA.contact.email || "";
   const phone = DATA.contact.phone || "";
 
-  const label = t("Join waitlist / Apply", "Waitlist / Poptávka");
+  const label = t("Apply / Waitlist", "Poptat / Waitlist");
 
   let href = "#apply";
   if(applyUrl && !applyUrl.includes("YOUR_FORM_URL_HERE")) {
@@ -152,18 +211,19 @@ function setApplyButtons(){
     btn.textContent = label;
   });
 
-  const note = $("#applyNote");
+  $("#availCta").href = href;
+  $("#availCta").textContent = label;
+
   const allInc = DATA.pricing?.[LANG === "cs" ? "all_inclusive_note_cs" : "all_inclusive_note_en"] || "";
-  note.textContent = allInc;
+  $("#applyNote").textContent = allInc;
 
   $("#contactLine").textContent = t(
     `Contact: ${email && !email.includes("YOUR_EMAIL_HERE") ? email : "add email"} • ${phone && !phone.includes("YOUR_PHONE_HERE") ? phone : "add phone"}`,
     `Kontakt: ${email && !email.includes("YOUR_EMAIL_HERE") ? email : "doplň e-mail"} • ${phone && !phone.includes("YOUR_PHONE_HERE") ? phone : "doplň telefon"}`
   );
 
-  const sla = $("#slaLine");
   const slaText = DATA.contact?.[LANG === "cs" ? "response_sla_cs" : "response_sla_en"] || "";
-  sla.textContent = slaText;
+  $("#slaLine").textContent = slaText;
 }
 
 function renderHeroAndCopy(){
@@ -171,17 +231,30 @@ function renderHeroAndCopy(){
   $("#brandName").textContent = b.name;
   $("#brandLoc").textContent = b.location;
 
+  $("#heroKicker").textContent = t(
+    "Premium shared living • Královo Pole",
+    "Prémiové spolubydlení • Královo Pole"
+  );
+
+  $("#heroSubtitle").textContent = t(
+    "Quiet, renovated shared living for young professionals. All-inclusive pricing, high-speed internet, focus-first rules.",
+    "Klidné, zrekonstruované sdílené bydlení pro mladé profesionály. All-inclusive cena, rychlý internet, pravidla pro klid."
+  );
+
+  $("#ctaPrimary").textContent = t("See available rooms", "Zobrazit dostupnost");
+  $("#ctaSecondary").textContent = t("Apply / Waitlist", "Poptat / Waitlist");
+
   $("#aboutText").textContent = t(
-    "A consistent, premium shared-living standard — clean, calm and reliable. Ideal if you work in IT/engineering, do research, or want a home that supports a high-quality routine.",
-    "Konzistentní prémiový standard sdíleného bydlení — čisté, klidné a spolehlivé. Ideální pro IT/technické profese, výzkum, nebo pokud chceš domov, který podporuje kvalitní režim."
+    "A consistent premium standard — clean, calm and reliable. Ideal if you work in IT/engineering, do research, or want a home that supports a high-quality routine.",
+    "Konzistentní prémiový standard — čisté, klidné a spolehlivé. Ideální pro IT/technické profese, výzkum, nebo pokud chceš domov, který podporuje kvalitní režim."
   );
 
   const highlights = DATA.highlights?.[LANG === "cs" ? "cs" : "en"] || [];
   const trust = DATA.trust_location?.[LANG === "cs" ? "cs" : "en"] || [];
-  const combined = [...highlights.slice(0,5), ...trust.slice(0,4)];
+  const combined = [...trust.slice(0,4), ...highlights.slice(0,3)];
 
   $("#whatIncluded").innerHTML = combined.map(x => `
-    <div class="li"><div class="dot"></div><span>${x}</span></div>
+    <div class="wideItem"><div class="dot"></div><span>${x}</span></div>
   `).join("");
 
   const rules = DATA.house_rules || {};
@@ -190,77 +263,87 @@ function renderHeroAndCopy(){
     rules.note_cs || "Pravidla pro klid: nekuřácké, bez zvířat, klidné prostředí."
   );
 
-  $("#langEn").classList.toggle("active", LANG === "en");
-  $("#langCs").classList.toggle("active", LANG === "cs");
+  // availability headline in hero
+  const avNow = DATA.rooms.find(r => r.id === "medium"); // we show actual values below anyway
+  const nowCount = DATA.availability.available_now_count;
+  $("#statBig").textContent = t(
+    `${nowCount} available now`,
+    `${nowCount} volné nyní`
+  );
+  $("#statSmall").textContent = t(
+    " + 1 large room from 1 Apr 2026",
+    "+ 1 velký pokoj od 1. 4. 2026"
+  );
 
+  // mini trust bullets in hero
+  const mini = trust.slice(0,4);
+  $("#trustMini").innerHTML = mini.map(x => `
+    <div class="trustItem"><div class="trustDot"></div><div>${x}</div></div>
+  `).join("");
+
+  $("#availTitle").textContent = t("Available & upcoming", "Volné a brzy volné");
+  $("#availSub").textContent = t(
+    "1 room available now + 1 large room from 1 Apr 2026. Tap for photos/video.",
+    "1 pokoj volný nyní + 1 velký pokoj volný od 1. 4. 2026. Klikni pro fotky/video."
+  );
+
+  $("#hRooms").textContent = t("Room types", "Typy pokojů");
   $("#roomsIntro").textContent = t(
-    "Choose a room type — each with the same premium standard. Tap a card for photos and video.",
-    "Vyber typ pokoje — všude stejný prémiový standard. Klikni na kartu pro fotky a video."
+    "Catalog of all room types. The featured cards above are the fastest path.",
+    "Katalog všech typů. Nejrychlejší cesta jsou featured karty nahoře."
   );
 
-  $("#waitlistText").textContent = t(
-    "If your preferred type isn’t available now, join the waitlist. We’ll contact you when a matching room gets close to release.",
-    "Pokud tvůj typ není teď volný, přidej se na waitlist. Ozveme se, jakmile se bude uvolnění blížit."
-  );
-
+  $("#hCompanies").textContent = t("For companies / relocation", "Pro firmy / relokace");
   $("#companiesText").textContent = t(
-    "Relocating employees to Brno? Brno Focus Living is a consistent, all-inclusive shared-living option — suitable for onboarding lists, internal Slack/Boards and relocation support.",
-    "Relokujete zaměstnance do Brna? Brno Focus Living je konzistentní all-inclusive sdílené bydlení — vhodné do onboarding seznamů, interního Slacku/nástěnky a relokační podpory."
+    "Relocating employees to Brno? This is a consistent all-inclusive option suitable for internal boards and onboarding lists.",
+    "Relokujete zaměstnance do Brna? Konzistentní all-inclusive varianta vhodná na interní nástěnku a onboarding."
   );
 
   $("#hr1").textContent = t("All-inclusive pricing (clear budgeting)", "All-inclusive cena (jasný budget)");
   $("#hr2").textContent = t("Move-in ready rooms (fast start)", "Pokoje připravené k nastěhování (rychlý start)");
   $("#hr3").textContent = t("Legal contract + permanent residence registration possible", "Legální smlouva + možnost trvalého pobytu");
-  $("#hr4").textContent = t("Tram stop nearby + 3 min to Albert/Lidl", "Tramvaj za rohem + 3 min Albert/Lidl");
+  $("#hr4").textContent = t("Tram nearby + 3 min to Albert/Lidl", "Tramvaj za rohem + 3 min Albert/Lidl");
 
   $("#companiesSnippet").textContent = t(
-    "“Brno Focus Living — quiet shared living in Brno–Královo Pole for young professionals. Fully renovated, all-inclusive, high-speed internet. Legal contract, permanent residence registration possible. Tram stop around the corner, 3 minutes to Albert and Lidl. Room types & availability:”",
-    "„Brno Focus Living — klidné sdílené bydlení v Brně–Králově Poli pro mladé profesionály. Kompletní rekonstrukce, all-inclusive, rychlý internet. Legální smlouva, možnost trvalého pobytu pro úřady. Tramvaj za rohem, 3 minuty k Albertu i Lidlu. Typy pokojů a dostupnost:“"
+    "“Brno Focus Living — premium shared living in Brno–Královo Pole. Fully renovated, all-inclusive, high-speed internet. Legal contract, permanent residence registration possible. Tram stop around the corner, 3 minutes to Albert and Lidl. Availability & room types:”",
+    "„Brno Focus Living — prémiové sdílené bydlení v Brně–Králově Poli. Kompletní rekonstrukce, all-inclusive, rychlý internet. Legální smlouva, možnost trvalého pobytu pro úřady. Tramvaj za rohem, 3 minuty k Albertu i Lidlu. Dostupnost a typy pokojů:“"
   );
 
+  $("#hApply").textContent = t("Apply / Waitlist", "Poptávka / Waitlist");
   $("#applyText").textContent = t(
-    "Tell us who you are and when you want to move in. We’ll reply with matching options and next steps.",
-    "Napiš, kdo jsi a kdy se chceš nastěhovat. Ozveme se s vhodnými možnostmi a dalšími kroky."
+    "Tell us your move-in date and routine. We reply with matching options and next steps.",
+    "Napiš datum nastěhování a režim. Odpovíme s vhodnými možnostmi a dalšími kroky."
   );
-  $("#applyFastText").textContent = t("Use the application form or contact us directly.", "Použij formulář, nebo nás kontaktuj napřímo.");
+  $("#applyFast").textContent = t("Fast route", "Rychlá cesta");
+  $("#applyFastText").textContent = t(
+    "Use the application form (recommended) or contact us directly.",
+    "Použij formulář (doporučeno) nebo nás kontaktuj napřímo."
+  );
   $("#applyTip").textContent = t(
-    "Tip: include your move-in date, expected stay length, and daily routine (work/study).",
-    "Tip: uveď datum nastěhování, plánovanou délku pobytu a denní režim (práce/studium)."
+    "Tip: include move-in date, expected stay length, and work/study routine.",
+    "Tip: uveď datum nastěhování, délku pobytu a denní režim (práce/studium)."
   );
 
   setApplyButtons();
+
+  // lang UI
+  $("#langEn").classList.toggle("active", LANG === "en");
+  $("#langCs").classList.toggle("active", LANG === "cs");
+
+  // filter UI
+  updateFilterUI();
 }
 
-/* ---------- folder gallery (jpg, ~10) ---------- */
-
-function tryLoadImage(url){
-  return new Promise(resolve => {
-    const img = new Image();
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = url;
+function updateFilterUI(){
+  document.querySelectorAll("[data-filter]").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.filter === FILTER);
   });
-}
-
-async function buildGalleryFromFolder(folder){
-  const out = [];
-  // cover.jpg optional
-  const cover = `${folder}/cover.jpg`;
-  if(await tryLoadImage(cover)) out.push(cover);
-
-  // numbered 1..10
-  for(let i=1;i<=10;i++){
-    const u = `${folder}/${i}.jpg`;
-    if(await tryLoadImage(u)) out.push(u);
-  }
-
-  // fallback
-  if(!out.length) out.push("assets/img/placeholder.jpg");
-  return out;
+  const toggle = $("#toggleOccupied");
+  toggle.classList.toggle("active", SHOW_OCCUPIED);
+  toggle.textContent = SHOW_OCCUPIED ? t("Hide occupied", "Skrýt obsazené") : t("Show occupied", "Zobrazit obsazené");
 }
 
 /* ---------- Modal + Gallery ---------- */
-
 function youtubeToEmbed(url){
   try{
     const u = new URL(url);
@@ -276,7 +359,6 @@ function youtubeToEmbed(url){
   } catch(e){}
   return url;
 }
-
 function normalizeVideoUrl(url){
   if(!url) return null;
   if(url.includes("youtube.com") || url.includes("youtu.be")) return youtubeToEmbed(url);
@@ -289,18 +371,16 @@ function setGallery(room, idx){
 
   $("#galleryMain").style.backgroundImage = `url('${imgs[GALLERY_INDEX]}')`;
 
-  const dots = imgs.map((_, i) =>
+  $("#galleryDots").innerHTML = imgs.map((_, i) =>
     `<button class="dotBtn ${i===GALLERY_INDEX?'active':''}" data-dot="${i}" aria-label="image ${i+1}"></button>`
   ).join("");
-  $("#galleryDots").innerHTML = dots;
   $("#galleryDots").querySelectorAll("button").forEach(b=>{
     b.addEventListener("click", ()=>setGallery(room, parseInt(b.dataset.dot,10)));
   });
 
-  const thumbs = imgs.map((src, i) =>
+  $("#thumbs").innerHTML = imgs.map((src, i) =>
     `<div class="thumb ${i===GALLERY_INDEX?'active':''}" data-thumb="${i}" style="background-image:url('${src}')"></div>`
   ).join("");
-  $("#thumbs").innerHTML = thumbs;
   $("#thumbs").querySelectorAll(".thumb").forEach(tn=>{
     tn.addEventListener("click", ()=>setGallery(room, parseInt(tn.dataset.thumb,10)));
   });
@@ -315,14 +395,14 @@ async function openRoomModal(room){
   const occ = (LANG === "cs" ? room.occupancy_cs : room.occupancy_en) || "";
 
   $("#modalTitle").textContent = title;
-  $("#modalMeta").textContent = `${room.size_m2} m² • ${occ} • ${t("Total rooms","Počet pokojů")}: ${room.units_total}`;
+  $("#modalMeta").textContent = `${room.size_m2} m² • ${occ} • ${t("All-inclusive","All-inclusive")}`;
 
   $("#modalStatusText").textContent = roomStatusLabel(room.status, room.available_from);
   $("#modalPrice").textContent = `${t("from","od")} ${formatPriceCZK(room.price_from_czk)}`;
 
   $("#modalAvail").textContent =
     room.status === "occupied"
-      ? t(`Currently occupied. Next expected: ${formatDate(room.available_from)} (join waitlist).`, `Aktuálně obsazeno. Předpoklad: ${formatDate(room.available_from)} (waitlist).`)
+      ? t(`Currently occupied. Join the waitlist.`, `Aktuálně obsazeno. Přidej se na waitlist.`)
       : (room.status === "upcoming"
           ? t(`Planned from ${formatDate(room.available_from)}`, `Předběžně od ${formatDate(room.available_from)}`)
           : t("Move-in: now (or by agreement)", "Nastěhování: ihned (nebo dle domluvy)")
@@ -334,7 +414,7 @@ async function openRoomModal(room){
   const ideal = (LANG === "cs" ? room.ideal_for_cs : room.ideal_for_en) || [];
   $("#modalIdeal").innerHTML = ideal.map(x=>`<li>${x}</li>`).join("");
 
-  // build gallery from folder
+  // build gallery
   if(room.gallery_folder){
     room.__gallery = await buildGalleryFromFolder(room.gallery_folder);
   } else {
@@ -357,7 +437,7 @@ async function openRoomModal(room){
   $("#modalApply").href = applyUrlForRoom(room.id);
   $("#modalApply").textContent = (room.status === "available")
     ? t("Apply / Request a viewing", "Poptat / domluvit prohlídku")
-    : t("Join waitlist", "Přidat na waitlist");
+    : t("Apply / Waitlist", "Poptat / Waitlist");
 
   const modal = $("#roomModal");
   modal.classList.add("open");
@@ -373,7 +453,7 @@ function closeRoomModal(){
   $("#videoFrame").src = "";
   document.body.style.overflow = "";
   if(location.hash.startsWith("#room=")){
-    history.replaceState(null, "", "#rooms");
+    history.replaceState(null, "", "#availability");
   }
 }
 
@@ -414,8 +494,7 @@ function wireModalStaticButtons(){
   });
 }
 
-/* ---------- Company tools ---------- */
-
+/* ---------- Company buttons ---------- */
 function wireCompanyButtons(){
   if(window.__companyWired) return;
   window.__companyWired = true;
@@ -444,27 +523,29 @@ function wireCompanyButtons(){
   });
 }
 
+/* ---------- Main render ---------- */
 function renderAll(){
   renderHeroAndCopy();
+  renderFeatured();
   renderRooms();
-  updateFilterUI();
   wireModalStaticButtons();
   wireCompanyButtons();
 }
 
 /* ---------- Init ---------- */
-
 async function init(){
   const res = await fetch("rooms.json", { cache: "no-store" });
   DATA = await res.json();
 
-  $("#langEn").addEventListener("click", ()=>setLang("en"));
-  $("#langCs").addEventListener("click", ()=>setLang("cs"));
+  // language
+  $("#langEn").addEventListener("click", ()=>{ LANG="en"; localStorage.setItem("bfl_lang", LANG); renderAll(); });
+  $("#langCs").addEventListener("click", ()=>{ LANG="cs"; localStorage.setItem("bfl_lang", LANG); renderAll(); });
 
-  $("#filterAll").addEventListener("click", ()=>setFilter("all"));
-  $("#filterAvailable").addEventListener("click", ()=>setFilter("available"));
-  $("#filterUpcoming").addEventListener("click", ()=>setFilter("upcoming"));
-  $("#filterOccupied").addEventListener("click", ()=>setFilter("occupied"));
+  // filters
+  $("#filterAll").addEventListener("click", ()=>{ FILTER="all"; renderRooms(); updateFilterUI(); });
+  $("#filterAvailable").addEventListener("click", ()=>{ FILTER="available"; renderRooms(); updateFilterUI(); });
+  $("#filterUpcoming").addEventListener("click", ()=>{ FILTER="upcoming"; renderRooms(); updateFilterUI(); });
+  $("#filterOccupied").addEventListener("click", ()=>{ FILTER="occupied"; renderRooms(); updateFilterUI(); });
 
   $("#toggleOccupied").addEventListener("click", ()=>{
     SHOW_OCCUPIED = !SHOW_OCCUPIED;
@@ -472,13 +553,9 @@ async function init(){
     updateFilterUI();
   });
 
-  $("#waitlistBtn").addEventListener("click", ()=>{
-    window.location.hash = "#apply";
-  });
-
   renderAll();
 
-  // deep link support: #room=small
+  // deep link support: #room=medium
   if(location.hash.startsWith("#room=")){
     const id = decodeURIComponent(location.hash.replace("#room=",""));
     const r = DATA.rooms.find(x=>x.id===id);
