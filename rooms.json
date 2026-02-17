@@ -1,16 +1,19 @@
 {
   "brand": {
     "name": "Brno Focus Living",
-    "location": "Brno – Královo Pole",
-    "tagline_en": "Quiet shared living for young professionals in Brno.",
-    "tagline_cs": "Klidné sdílené bydlení pro mladé profesionály v Brně."
+    "location": "Brno – Královo Pole"
   },
   "contact": {
     "email": "krasnebydleni@email.cz",
     "phone": "+420 732 670 200",
-    "apply_url": "https://forms.gle/LsYE25GAJ8KwgcZF9",
+    "apply_url": "https://forms.gle/LsYE25GAJ8KwgcZF9",{
     "response_sla_en": "We usually reply the same day (latest within 24 hours).",
     "response_sla_cs": "Obvykle odpovídáme tentýž den (nejpozději do 24 hodin)."
+  },
+  "availability": {
+    "available_now_count": 1,
+    "upcoming_from": "2026-04-01",
+    "upcoming_count": 1
   },
   "trust_location": {
     "en": [
@@ -35,8 +38,8 @@
     "smoke_free": true,
     "no_pets": true,
     "not_a_party_flat": true,
-    "note_en": "Calm, clean home — designed for focus, rest and respectful shared living.",
-    "note_cs": "Klidný a čistý domov — postavený na soustředění, odpočinku a respektu."
+    "note_en": "Calm, clean home — smoke-free, no pets, designed for focus and respectful shared living.",
+    "note_cs": "Klidný a čistý domov — nekuřácké, bez zvířat, postavené na respektu a klidu."
   },
   "highlights": {
     "en": [
@@ -56,51 +59,6 @@
   },
   "rooms": [
     {
-      "id": "small",
-      "name_en": "Small Room",
-      "name_cs": "Malý pokoj",
-      "size_m2": 8,
-      "units_total": 4,
-      "price_from_czk": 7100,
-      "status": "upcoming",
-      "available_from": "2026-04-01",
-      "occupancy_en": "Best for 1 person",
-      "occupancy_cs": "Ideální pro 1 osobu",
-      "summary_en": "Compact, efficient room for people who value simplicity and calm.",
-      "summary_cs": "Kompaktní pokoj pro ty, kdo chtějí jednoduchost, pořádek a klid.",
-      "included_en": [
-        "All-inclusive utilities",
-        "High-speed internet",
-        "Move-in ready furnishing",
-        "Shared bathrooms + separate WC",
-        "Custom-made kitchen"
-      ],
-      "included_cs": [
-        "Energie a služby v ceně",
-        "Rychlý internet",
-        "Plně zařízené k nastěhování",
-        "Sdílené koupelny + separátní WC",
-        "Kuchyň na míru"
-      ],
-      "ideal_for_en": [
-        "Junior professionals",
-        "Relocation to Brno",
-        "Focused routines (work/study)"
-      ],
-      "ideal_for_cs": [
-        "Mladí profesionálové",
-        "Relokace do Brna",
-        "Klidný režim (práce/studium)"
-      ],
-      "gallery_folder": "assets/rooms/small",
-      "cover": "cover.jpg",
-      "video": {
-        "title_en": "Walkthrough",
-        "title_cs": "Video prohlídka",
-        "url": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
-      }
-    },
-    {
       "id": "medium",
       "name_en": "Medium Room",
       "name_cs": "Střední pokoj",
@@ -109,10 +67,22 @@
       "price_from_czk": 11500,
       "status": "available",
       "available_from": "now",
+      "featured": true,
+      "featured_order": 1,
       "occupancy_en": "Great for 1–2 people",
       "occupancy_cs": "Vhodné pro 1–2 osoby",
       "summary_en": "Balanced comfort and price — a calm, functional home base.",
       "summary_cs": "Ideální kompromis pohodlí a ceny — klidné a funkční zázemí.",
+      "feature_bullets_en": [
+        "All-inclusive (utilities + internet)",
+        "Fully renovated + custom-made kitchen",
+        "Tram nearby + 3 min to Albert/Lidl"
+      ],
+      "feature_bullets_cs": [
+        "All-inclusive (energie + internet)",
+        "Kompletní rekonstrukce + kuchyň na míru",
+        "Tramvaj za rohem + 3 min Albert/Lidl"
+      ],
       "included_en": [
         "All-inclusive utilities",
         "High-speed internet",
@@ -152,12 +122,24 @@
       "size_m2": 22,
       "units_total": 8,
       "price_from_czk": 13900,
-      "status": "occupied",
-      "available_from": "2026-06-01",
+      "status": "upcoming",
+      "available_from": "2026-04-01",
+      "featured": true,
+      "featured_order": 2,
       "occupancy_en": "Comfortably for 2 people",
       "occupancy_cs": "Komfortně pro 2 osoby",
       "summary_en": "Spacious premium feel — ideal for long-term comfort and a high-quality routine.",
       "summary_cs": "Prostorný prémiový pokoj — ideální pro dlouhodobé pohodlí.",
+      "feature_bullets_en": [
+        "Premium space for 2 (work + comfort)",
+        "All-inclusive (utilities + internet)",
+        "Legal contract + permanent residence possible"
+      ],
+      "feature_bullets_cs": [
+        "Prémiový prostor pro 2 (práce + komfort)",
+        "All-inclusive (energie + internet)",
+        "Legální smlouva + možnost trvalého pobytu"
+      ],
       "included_en": [
         "All-inclusive utilities",
         "High-speed internet",
@@ -183,6 +165,52 @@
         "Lidé, co chtějí komfort bez starostí"
       ],
       "gallery_folder": "assets/rooms/large",
+      "cover": "cover.jpg",
+      "video": {
+        "title_en": "Walkthrough",
+        "title_cs": "Video prohlídka",
+        "url": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
+      }
+    },
+    {
+      "id": "small",
+      "name_en": "Small Room",
+      "name_cs": "Malý pokoj",
+      "size_m2": 8,
+      "units_total": 4,
+      "price_from_czk": 7100,
+      "status": "occupied",
+      "available_from": "2026-06-01",
+      "featured": false,
+      "occupancy_en": "Best for 1 person",
+      "occupancy_cs": "Ideální pro 1 osobu",
+      "summary_en": "Compact, efficient room for people who value simplicity and calm.",
+      "summary_cs": "Kompaktní pokoj pro ty, kdo chtějí jednoduchost, pořádek a klid.",
+      "included_en": [
+        "All-inclusive utilities",
+        "High-speed internet",
+        "Move-in ready furnishing",
+        "Shared bathrooms + separate WC",
+        "Custom-made kitchen"
+      ],
+      "included_cs": [
+        "Energie a služby v ceně",
+        "Rychlý internet",
+        "Plně zařízené k nastěhování",
+        "Sdílené koupelny + separátní WC",
+        "Kuchyň na míru"
+      ],
+      "ideal_for_en": [
+        "Junior professionals",
+        "Relocation to Brno",
+        "Focused routines (work/study)"
+      ],
+      "ideal_for_cs": [
+        "Mladí profesionálové",
+        "Relokace do Brna",
+        "Klidný režim (práce/studium)"
+      ],
+      "gallery_folder": "assets/rooms/small",
       "cover": "cover.jpg",
       "video": {
         "title_en": "Walkthrough",
