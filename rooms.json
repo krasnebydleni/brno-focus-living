@@ -6,14 +6,53 @@
     "tagline_cs": "Klidné sdílené bydlení pro mladé profesionály v Brně."
   },
   "contact": {
-    "email": "YOUR_EMAIL_HERE",
-    "phone": "YOUR_PHONE_HERE",
-    "apply_url": "YOUR_FORM_URL_HERE"
+    "email": "krasnebydleni@email.cz",
+    "phone": "+420 732 670 200",
+    "apply_url": "https://forms.gle/LsYE25GAJ8KwgcZF9",
+    "response_sla_en": "We usually reply the same day (latest within 24 hours).",
+    "response_sla_cs": "Obvykle odpovídáme tentýž den (nejpozději do 24 hodin)."
   },
-  "rules": {
-    "smoking": false,
-    "pets": false,
-    "party_flat": false
+  "trust_location": {
+    "en": [
+      "Legal contract (official agreement).",
+      "Permanent residence registration possible (for authorities).",
+      "Tram stop around the corner.",
+      "3 minutes to Albert and Lidl."
+    ],
+    "cs": [
+      "Legální smlouva (oficiální smlouva).",
+      "Možnost přihlášení trvalého pobytu pro úřady.",
+      "Tramvaj za rohem.",
+      "3 minuty k Albertu i Lidlu."
+    ]
+  },
+  "pricing": {
+    "currency": "CZK",
+    "all_inclusive_note_en": "All-inclusive = rent + utilities + high-speed internet.",
+    "all_inclusive_note_cs": "All-inclusive = nájem + energie + rychlý internet."
+  },
+  "house_rules": {
+    "smoke_free": true,
+    "no_pets": true,
+    "not_a_party_flat": true,
+    "note_en": "Calm, clean home — designed for focus, rest and respectful shared living.",
+    "note_cs": "Klidný a čistý domov — postavený na soustředění, odpočinku a respektu."
+  },
+  "highlights": {
+    "en": [
+      "Fully renovated interior",
+      "Custom-made kitchen",
+      "Shared bathrooms + separate WC",
+      "High-speed internet included",
+      "Calm building and hassle-free neighbors"
+    ],
+    "cs": [
+      "Kompletní rekonstrukce",
+      "Kuchyň na míru",
+      "Sdílené koupelny + separátní WC",
+      "Rychlý internet v ceně",
+      "Klidný dům a bezproblémoví sousedé"
+    ]
   },
   "rooms": [
     {
@@ -22,18 +61,44 @@
       "name_cs": "Malý pokoj",
       "size_m2": 8,
       "units_total": 4,
-      "price_from_czk": 7300,
+      "price_from_czk": 7100,
       "status": "upcoming",
       "available_from": "2026-04-01",
-      "hero_bullets_en": ["Minimalist, move-in ready", "Best value for focused living"],
-      "hero_bullets_cs": ["Minimalistický, připravený k nastěhování", "Nejlepší poměr cena/klid"],
-      "summary_en": "A compact, efficient room for people who value simplicity and calm.",
+      "occupancy_en": "Best for 1 person",
+      "occupancy_cs": "Ideální pro 1 osobu",
+      "summary_en": "Compact, efficient room for people who value simplicity and calm.",
       "summary_cs": "Kompaktní pokoj pro ty, kdo chtějí jednoduchost, pořádek a klid.",
-      "included_en": ["All-inclusive utilities", "High-speed internet", "Shared bathrooms + separate WC", "Custom kitchen"],
-      "included_cs": ["Energie a služby v ceně", "Rychlý internet", "Sdílené koupelny + separátní WC", "Kuchyň na míru"],
-      "ideal_for_en": ["Junior professionals", "VUT / MU students with a calm routine", "Relocation to Brno"],
-      "ideal_for_cs": ["Mladí profesionálové", "VUT / MU studenti s klidným režimem", "Relokace do Brna"],
-      "image": "assets/img/small.jpg"
+      "included_en": [
+        "All-inclusive utilities",
+        "High-speed internet",
+        "Move-in ready furnishing",
+        "Shared bathrooms + separate WC",
+        "Custom-made kitchen"
+      ],
+      "included_cs": [
+        "Energie a služby v ceně",
+        "Rychlý internet",
+        "Plně zařízené k nastěhování",
+        "Sdílené koupelny + separátní WC",
+        "Kuchyň na míru"
+      ],
+      "ideal_for_en": [
+        "Junior professionals",
+        "Relocation to Brno",
+        "Focused routines (work/study)"
+      ],
+      "ideal_for_cs": [
+        "Mladí profesionálové",
+        "Relokace do Brna",
+        "Klidný režim (práce/studium)"
+      ],
+      "gallery_folder": "assets/rooms/small",
+      "cover": "cover.jpg",
+      "video": {
+        "title_en": "Walkthrough",
+        "title_cs": "Video prohlídka",
+        "url": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
+      }
     },
     {
       "id": "medium",
@@ -41,18 +106,44 @@
       "name_cs": "Střední pokoj",
       "size_m2": 12,
       "units_total": 4,
-      "price_from_czk": 11900,
+      "price_from_czk": 11500,
       "status": "available",
       "available_from": "now",
-      "hero_bullets_en": ["Balanced space & comfort", "Great for long-term stay"],
-      "hero_bullets_cs": ["Ideální kompromis prostoru a komfortu", "Skvělé na dlouhodobé bydlení"],
-      "summary_en": "Comfortable size with a strong focus on a clean and productive home base.",
-      "summary_cs": "Pohodlná velikost s důrazem na čisté a funkční zázemí pro práci i studium.",
-      "included_en": ["All-inclusive utilities", "High-speed internet", "Fully renovated interior", "Shared bathrooms + separate WC"],
-      "included_cs": ["Energie a služby v ceně", "Rychlý internet", "Kompletní rekonstrukce", "Sdílené koupelny + separátní WC"],
-      "ideal_for_en": ["Engineers & IT", "PhD / researchers", "People who want calm shared living"],
-      "ideal_for_cs": ["IT a technické obory", "Doktorandi / výzkum", "Lidé, co chtějí klidné spolubydlení"],
-      "image": "assets/img/medium.jpg"
+      "occupancy_en": "Great for 1–2 people",
+      "occupancy_cs": "Vhodné pro 1–2 osoby",
+      "summary_en": "Balanced comfort and price — a calm, functional home base.",
+      "summary_cs": "Ideální kompromis pohodlí a ceny — klidné a funkční zázemí.",
+      "included_en": [
+        "All-inclusive utilities",
+        "High-speed internet",
+        "Fully renovated interior",
+        "Shared bathrooms + separate WC",
+        "Custom-made kitchen"
+      ],
+      "included_cs": [
+        "Energie a služby v ceně",
+        "Rychlý internet",
+        "Kompletní rekonstrukce",
+        "Sdílené koupelny + separátní WC",
+        "Kuchyň na míru"
+      ],
+      "ideal_for_en": [
+        "Engineers & IT",
+        "PhD / researchers",
+        "People who want calm shared living"
+      ],
+      "ideal_for_cs": [
+        "IT a technické obory",
+        "Doktorandi / výzkum",
+        "Lidé, co chtějí klidné spolubydlení"
+      ],
+      "gallery_folder": "assets/rooms/medium",
+      "cover": "cover.jpg",
+      "video": {
+        "title_en": "Walkthrough",
+        "title_cs": "Video prohlídka",
+        "url": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
+      }
     },
     {
       "id": "large",
@@ -61,17 +152,43 @@
       "size_m2": 22,
       "units_total": 8,
       "price_from_czk": 13900,
-      "status": "upcoming",
-      "available_from": "2026-05-15",
-      "hero_bullets_en": ["Maximum comfort & space", "Premium feel for everyday life"],
-      "hero_bullets_cs": ["Maximální komfort a prostor", "Prémiový pocit pro každý den"],
-      "summary_en": "Spacious and premium – ideal if you want room to breathe and work comfortably.",
-      "summary_cs": "Prostorný prémiový pokoj – ideální, když chceš mít klid i prostor na práci.",
-      "included_en": ["All-inclusive utilities", "High-speed internet", "Custom kitchen", "Shared bathrooms + separate WC"],
-      "included_cs": ["Energie a služby v ceně", "Rychlý internet", "Kuchyň na míru", "Sdílené koupelny + separátní WC"],
-      "ideal_for_en": ["Young professionals", "Long-term tenants", "People who want comfort without hassle"],
-      "ideal_for_cs": ["Mladí profesionálové", "Dlouhodobí nájemníci", "Lidé, co chtějí komfort bez starostí"],
-      "image": "assets/img/large.jpg"
+      "status": "occupied",
+      "available_from": "2026-06-01",
+      "occupancy_en": "Comfortably for 2 people",
+      "occupancy_cs": "Komfortně pro 2 osoby",
+      "summary_en": "Spacious premium feel — ideal for long-term comfort and a high-quality routine.",
+      "summary_cs": "Prostorný prémiový pokoj — ideální pro dlouhodobé pohodlí.",
+      "included_en": [
+        "All-inclusive utilities",
+        "High-speed internet",
+        "More space for work & comfort",
+        "Shared bathrooms + separate WC",
+        "Custom-made kitchen"
+      ],
+      "included_cs": [
+        "Energie a služby v ceně",
+        "Rychlý internet",
+        "Více prostoru na práci i komfort",
+        "Sdílené koupelny + separátní WC",
+        "Kuchyň na míru"
+      ],
+      "ideal_for_en": [
+        "Young professionals",
+        "Long-term tenants",
+        "People who want comfort without hassle"
+      ],
+      "ideal_for_cs": [
+        "Mladí profesionálové",
+        "Dlouhodobí nájemníci",
+        "Lidé, co chtějí komfort bez starostí"
+      ],
+      "gallery_folder": "assets/rooms/large",
+      "cover": "cover.jpg",
+      "video": {
+        "title_en": "Walkthrough",
+        "title_cs": "Video prohlídka",
+        "url": "https://www.youtube.com/watch?v=YOUR_VIDEO_ID"
+      }
     }
   ]
 }
