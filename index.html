@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Brno Focus Living — Quiet shared living in Královo Pole</title>
-  <meta name="description" content="Brno Focus Living — quiet shared living for young professionals in Brno – Královo Pole. Fully renovated, all-inclusive, focus-first house rules." />
+  <title>Brno Focus Living — Premium shared living in Královo Pole</title>
+  <meta name="description" content="Brno Focus Living — premium shared living in Brno – Královo Pole. Fully renovated, all-inclusive, quiet, ideal for young professionals." />
   <meta property="og:title" content="Brno Focus Living" />
-  <meta property="og:description" content="Quiet shared living in Brno – Královo Pole. All-inclusive, fully renovated, focus-first rules. See room types & availability." />
+  <meta property="og:description" content="Premium shared living in Královo Pole. All-inclusive, fully renovated, quiet. 1 room available now + 1 from 1 Apr 2026." />
   <meta property="og:image" content="assets/img/og.jpg" />
   <meta name="theme-color" content="#0b1220" />
   <link rel="stylesheet" href="styles.css" />
@@ -15,52 +15,68 @@
 <body>
   <div class="container">
 
+    <!-- Top bar -->
     <div class="topbar">
       <div class="brand">
-        <strong id="brandName">Brno Focus Living</strong>
-        <span id="brandLoc">Brno – Královo Pole</span>
+        <div class="brandMark">BFL</div>
+        <div class="brandText">
+          <strong id="brandName">Brno Focus Living</strong>
+          <span id="brandLoc">Brno – Královo Pole</span>
+        </div>
       </div>
 
       <div class="controls">
-        <div class="pill" id="langEn" role="button" tabindex="0" aria-label="Switch language to English">EN</div>
-        <div class="pill" id="langCs" role="button" tabindex="0" aria-label="Switch language to Czech">CZ</div>
-        <a class="btn primary" href="#apply" id="applyBtnTop">Join waitlist / Apply</a>
+        <button class="pill" id="langEn" type="button">EN</button>
+        <button class="pill" id="langCs" type="button">CZ</button>
+        <a class="btn primary" href="#apply" id="applyBtnTop">Apply / Waitlist</a>
       </div>
     </div>
 
-    <!-- HERO: full-width premium -->
-    <div class="hero">
+    <!-- HERO -->
+    <section class="hero">
       <div class="heroCard">
-        <div class="heroImg" style="background-image:url('assets/img/hero.jpg')"></div>
+        <div class="heroBg" style="background-image:url('assets/img/hero.jpg')"></div>
+        <div class="heroOverlay"></div>
 
-        <div class="heroContent">
-          <div class="heroContentInner">
+        <div class="heroInner">
+          <div class="heroLeft">
+            <div class="heroKicker" id="heroKicker">Premium shared living • Královo Pole</div>
             <h1 id="heroTitle">Brno Focus Living</h1>
-            <div class="sub" id="heroSubtitle">
-              Quiet shared living in Brno – Královo Pole for young professionals. Fully renovated, all-inclusive, designed for focus.
+            <p class="heroSub" id="heroSubtitle"></p>
+
+            <div class="heroBadges" id="heroBadges">
+              <span class="badge">All-inclusive</span>
+              <span class="badge">High-speed internet</span>
+              <span class="badge">Fully renovated</span>
+              <span class="badge">Quiet house rules</span>
             </div>
 
-            <div class="badges" id="heroBadges">
-              <div class="badge">All-inclusive</div>
-              <div class="badge">High-speed internet</div>
-              <div class="badge">Fully renovated</div>
-              <div class="badge">Focus-first rules</div>
+            <div class="heroCtas">
+              <a class="btn primary" href="#availability" id="ctaPrimary">See available rooms</a>
+              <a class="btn ghost" href="#apply" id="ctaSecondary">Apply / Waitlist</a>
             </div>
 
-            <div class="ctaRow">
-              <a class="btn primary" href="#rooms" id="ctaRooms">View room types</a>
-              <a class="btn" href="#apply" id="ctaApply">Join waitlist / Apply</a>
+            <div class="heroMeta">
+              <div class="metaLine" id="contactLine"></div>
+              <div class="metaLine" id="slaLine"></div>
             </div>
+          </div>
 
-            <div class="smallNote" id="contactLine">Contact: krasnebydleni@email.cz • +420 732 670 200</div>
-            <div class="smallNote" id="slaLine"></div>
+          <div class="heroRight">
+            <div class="statCard">
+              <div class="statTop" id="statTop">Availability</div>
+              <div class="statBig" id="statBig"></div>
+              <div class="statSmall" id="statSmall"></div>
+              <div class="statDivider"></div>
+              <div class="trustList" id="trustMini"></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- WHY/TRUST: clean wide block -->
-    <div class="section" style="margin-top:16px;">
+    <!-- TRUST / WHY -->
+    <section class="section" id="why">
       <div class="wideCard">
         <div class="wideGrid">
           <div>
@@ -71,42 +87,55 @@
         </div>
         <div class="wideNote" id="policyLine"></div>
       </div>
-    </div>
+    </section>
 
-    <div class="section" id="rooms">
-      <h3 id="hRooms">Room types</h3>
-      <p id="roomsIntro" class="meta"></p>
+    <!-- FEATURED AVAILABILITY -->
+    <section class="section" id="availability">
+      <div class="sectionHead">
+        <div>
+          <h2 class="sectionTitle" id="availTitle">Available & upcoming</h2>
+          <div class="sectionSub" id="availSub"></div>
+        </div>
+        <a class="btn primary" href="#apply" id="availCta">Apply / Waitlist</a>
+      </div>
+
+      <div class="featuredGrid" id="featuredGrid"></div>
+    </section>
+
+    <!-- CATALOG -->
+    <section class="section" id="rooms">
+      <div class="sectionHead">
+        <div>
+          <h2 class="sectionTitle" id="hRooms">Room types</h2>
+          <div class="sectionSub" id="roomsIntro"></div>
+        </div>
+      </div>
 
       <div class="filters" aria-label="filters">
         <span class="meta" id="hFiltersLabel">Filter</span>
-        <div class="pill active" data-filter="all" id="filterAll" role="button" tabindex="0">All</div>
-        <div class="pill" data-filter="available" id="filterAvailable" role="button" tabindex="0">Available</div>
-        <div class="pill" data-filter="upcoming" id="filterUpcoming" role="button" tabindex="0">Upcoming</div>
-        <div class="pill" data-filter="occupied" id="filterOccupied" role="button" tabindex="0">Occupied</div>
-        <div class="pill" id="toggleOccupied" role="button" tabindex="0">Show occupied</div>
+        <button class="pill active" data-filter="all" id="filterAll" type="button">All</button>
+        <button class="pill" data-filter="available" id="filterAvailable" type="button">Available</button>
+        <button class="pill" data-filter="upcoming" id="filterUpcoming" type="button">Upcoming</button>
+        <button class="pill" data-filter="occupied" id="filterOccupied" type="button">Occupied</button>
+        <button class="pill" id="toggleOccupied" type="button">Show occupied</button>
         <span class="meta" id="roomsCount"></span>
       </div>
 
       <div class="grid" id="roomsGrid"></div>
+    </section>
 
-      <div class="wideCard" style="padding:16px; margin-top:16px;">
-        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; justify-content:space-between;">
-          <div style="min-width:260px; flex:1;">
-            <div style="font-weight:900; font-size:16px;" id="waitlistTitle">Waitlist beats timing</div>
-            <div class="meta" style="margin-top:6px;" id="waitlistText"></div>
-          </div>
-          <a class="btn primary" href="#apply" id="waitlistBtn">Join waitlist</a>
+    <!-- COMPANIES -->
+    <section class="section" id="companies">
+      <div class="sectionHead">
+        <div>
+          <h2 class="sectionTitle" id="hCompanies">For companies / relocation</h2>
+          <div class="sectionSub" id="companiesText"></div>
         </div>
       </div>
-    </div>
-
-    <div class="section" id="companies">
-      <h3 id="hCompanies">For companies / relocation</h3>
-      <p class="meta" id="companiesText"></p>
 
       <div class="grid2">
         <div class="wideCard" style="padding:16px;">
-          <div style="font-weight:900; font-size:16px;" id="companiesBul1">Why it works for HR</div>
+          <div class="cardTitle2" id="companiesBul1">Why it works for HR</div>
           <ul class="metaList" id="companiesList">
             <li id="hr1"></li>
             <li id="hr2"></li>
@@ -116,40 +145,46 @@
         </div>
 
         <div class="wideCard" style="padding:16px;">
-          <div style="font-weight:900; font-size:16px;" id="companiesBul2">Send internally</div>
+          <div class="cardTitle2" id="companiesBul2">Send internally</div>
           <div class="meta" id="companiesSnippet" style="line-height:1.65;"></div>
           <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="btn" id="copyCompanySnippet">Copy snippet</button>
-            <button class="btn" id="copySiteLink">Copy link</button>
+            <button class="btn" id="copyCompanySnippet" type="button">Copy snippet</button>
+            <button class="btn" id="copySiteLink" type="button">Copy link</button>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="section" id="apply">
-      <h3 id="hApply">Apply / Join waitlist</h3>
-      <p id="applyText" class="meta"></p>
-
-      <div class="wideCard" style="padding:16px; margin-top:12px;">
-        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
-          <div style="color:var(--muted); line-height:1.65;">
-            <div><strong style="color:var(--text);" id="applyFast">Fast route:</strong> <span id="applyFastText"></span></div>
-            <div style="margin-top:6px;" id="applyTip"></div>
-          </div>
-          <a class="btn primary" href="#apply" id="applyBtnBottom">Join waitlist / Apply</a>
+    <!-- APPLY -->
+    <section class="section" id="apply">
+      <div class="sectionHead">
+        <div>
+          <h2 class="sectionTitle" id="hApply">Apply / Waitlist</h2>
+          <div class="sectionSub" id="applyText"></div>
         </div>
-        <div class="smallNote" id="applyNote"></div>
+        <a class="btn primary" href="#apply" id="applyBtnBottom">Apply / Waitlist</a>
       </div>
-    </div>
 
-    <div class="footer">
+      <div class="wideCard" style="padding:16px;">
+        <div class="applyBox">
+          <div>
+            <div class="applyTitle" id="applyFast">Fast route</div>
+            <div class="applyText" id="applyFastText"></div>
+            <div class="applyTip" id="applyTip"></div>
+          </div>
+          <div class="applyNote smallNote" id="applyNote"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
       <div>
         <strong>Brno Focus Living</strong> • Královo Pole • <span style="opacity:.9">All-inclusive shared living</span>
       </div>
       <div>
-        <a href="#rooms">Rooms</a> • <a href="#companies">For companies</a> • <a href="#apply">Apply</a>
+        <a href="#availability">Availability</a> • <a href="#rooms">Room types</a> • <a href="#apply">Apply</a>
       </div>
-    </div>
+    </footer>
 
   </div>
 
@@ -163,7 +198,7 @@
           <div class="modalTitle" id="modalTitle">Room</div>
           <div class="modalMeta" id="modalMeta">—</div>
         </div>
-        <button class="iconBtn" id="modalClose" aria-label="Close">✕</button>
+        <button class="iconBtn" id="modalClose" aria-label="Close" type="button">✕</button>
       </div>
 
       <div class="modalBody">
@@ -171,9 +206,9 @@
           <div class="gallery">
             <div class="galleryMain" id="galleryMain"></div>
             <div class="galleryBar">
-              <button class="btn" id="prevImg" aria-label="Previous image">←</button>
+              <button class="btn" id="prevImg" type="button" aria-label="Previous image">←</button>
               <div class="galleryDots" id="galleryDots"></div>
-              <button class="btn" id="nextImg" aria-label="Next image">→</button>
+              <button class="btn" id="nextImg" type="button" aria-label="Next image">→</button>
             </div>
             <div class="thumbs" id="thumbs"></div>
           </div>
@@ -210,8 +245,8 @@
         </div>
 
         <div class="modalFooter">
-          <a class="btn primary" href="#apply" id="modalApply">Join waitlist / Apply</a>
-          <button class="btn" id="copyLink">Copy link</button>
+          <a class="btn primary" href="#apply" id="modalApply">Apply / Waitlist</a>
+          <button class="btn" id="copyLink" type="button">Copy link</button>
         </div>
       </div>
     </div>
