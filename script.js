@@ -243,6 +243,10 @@ function renderHeroAndCopy(){
 
   $("#ctaPrimary").textContent = t("See available rooms", "Zobrazit dostupnost");
   $("#ctaSecondary").textContent = t("Apply / Waitlist", "Poptat / Waitlist");
+ 
+  $("#hWhy").textContent = t("Why Brno Focus Living", "Proč Brno Focus Living");
+  $("#companiesBul1").textContent = t("Why it works for HR", "Proč to funguje pro HR");
+  $("#companiesBul2").textContent = t("Send internally", "Sdílejte interně");
 
   $("#aboutText").textContent = t(
     "A consistent premium standard — clean, calm and reliable. Ideal if you work in IT/engineering, do research, or want a home that supports a high-quality routine.",
