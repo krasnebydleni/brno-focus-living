@@ -503,3 +503,18 @@ h1{
   display:flex; gap:10px; flex-wrap:wrap;
   margin-top:12px;
 }
+.ogBanner{
+  margin-top:12px;
+  border-radius: 18px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.04);
+}
+.ogBanner img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+@media (prefers-color-scheme: light){
+  .ogBanner{ border-color: rgba(15,23,42,.12); background: rgba(255,255,255,.65); }
+}
